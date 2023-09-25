@@ -2,27 +2,40 @@
 import { ref } from 'vue';
 
     const inputData = ref("");
-    const todoList = ref(['Item 1', 'Item 2', 'Item 3']);
+    const todoList = ref([{text:'Item 1', completed: false}, {text:'Item 2', completed: false}, {text:'Item 3', completed: false}]);
+    const editingTask = ref(-1);
+    const filterTask = ref('All');
 
     const handleClick = () =>{
-        todoList.value = [...todoList.value, inputData.value];
+        todoList.value = [...todoList.value, {text: inputData.value, completed: false}];
         inputData.value = "";
     }
 
     const deleteTask = (id) =>{
-        
+        todoList.value.splice(id, 1);
+    }
+
+    const editTask = (id) =>{
+        editingTask.value = id;
+    }
+
+    const saveEditedTask = () =>{
+        editingTask.value = -1;
     }
 </script>
+
+
 
 <template>
     <div class="list" > 
         <div class="listInput">
-            <input type="text" v-model="inputData"/>
-            <input class="inputButton" type="button" @click="handleClick"/>
+            <div class="inputInput"><input class="input" type="text" v-model="inputData" @keydown.enter="handleClick"/></div>
+            <div class="inputButton"><input class="button" type="button" value="Add Task"  @click="handleClick"/></div>
         </div>
         <div class="listTasks">
             <div class="task" v-for="(item, index) in todoList" :key="index">
-                <span>{{ item }}</span>
+                <span v-if="index !== editingTask">{{ item }}</span>
+                <input v-else v-model="todoList[index]" type="text" @blur="saveEditedTask" @keyup.enter="saveEditedTask">
                 <span class="taskSelect">
                     <span class="delete" @click="deleteTask(index)">Delete</span>
                     <span class="edit" @click="editTask(index)">Edit</span>
@@ -31,6 +44,8 @@ import { ref } from 'vue';
         </div>
     </div>
 </template>
+
+
 
 <style>
     .list{
@@ -46,16 +61,48 @@ import { ref } from 'vue';
     }
     .listInput{
         width: 100%;
-        height: 6%;
+        height: 9%;
         border: 1px solid transparent; 
         display: flex;
         align-items: center;
         justify-content: center;
         border: none;
-        border-bottom: 1px solid rgb(2, 71, 7);
+        
+    }
+    .inputInput{
+        flex: 5;
+        width: 90%;
+        height: 90%;
+        border: 1px solid rgb(47, 158, 255);
+        border-radius: 10px;
+    }
+    .input{
+        width: 95%;
+        height: 95%;
+        font-size: larger;
+        outline: none;
+        border: none;
+        color: rgb(54, 54, 164);
     }
     .inputButton{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 94%;
+        border-radius: 10px;
+        border: 1px solid rgb(47, 158, 255);
         cursor: pointer;
+    }
+    .button{
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #e0eaec;
+        background-color: rgb(0, 128, 255);
     }
 
     .listTasks{

@@ -20,6 +20,9 @@
      text-align: center;
      align-items: center;
      justify-content: center;
+     color: rgb(54, 54, 164);
+     font-size: large;
+     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      margin: 0p;
   }
   .App{
