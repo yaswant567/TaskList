@@ -31,6 +31,5 @@
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    background-color: rgb(156, 220, 245);
-  }
+    background-image: linear-gradient(-225deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%);  }
 </style>

@@ -7,11 +7,14 @@ import { computed, ref } from 'vue';
     const filterTask = ref('All');
 
     const handleClick = () =>{
-        todoList.value = [...todoList.value, {text: inputData.value, completed: false}];
-        const completedTask = todoList.value.filter((task) => task.completed);
-        const activeTask = todoList.value.filter((task) => !task.completed);
-        todoList.value = [...activeTask, ...completedTask];
-        inputData.value = "";
+        if(inputData.value != "")
+        {
+          todoList.value = [...todoList.value, {text: inputData.value, completed: false}];
+          const completedTask = todoList.value.filter((task) => task.completed);
+          const activeTask = todoList.value.filter((task) => !task.completed);
+          todoList.value = [...activeTask, ...completedTask];
+          inputData.value = "";
+        }
     }
 
     const deleteTask = (id) =>{
@@ -47,6 +50,7 @@ import { computed, ref } from 'vue';
 
 <template>
     <div class="list" > 
+        <h3>2023 Task List</h3>
         <div class="listInput">
             <div class="inputInput"><input class="input" type="text" placeholder="Add your Task here....." v-model="inputData" @keydown.enter="handleClick"/></div>
             <div class="inputButton"><input class="button" type="button" value="Add Task"  @click="handleClick"/></div>
@@ -84,16 +88,24 @@ import { computed, ref } from 'vue';
       font-style: italic; /* Italicize the text */
     }
 
+    h3{
+        font-weight: bolder;
+        font-size:x-large;
+        color:  rgb(0, 128, 255);
+        height: 40px;
+        text-decoration: underline;
+    }
+
     .list{
         display: flex;
         flex-direction: column;
         align-items: center;
         background-color: #ffff;
         border-radius: 17px;
-        width: 47%;
+        width: 37%;
         height: 90%;
         padding: 20px 10px;
-        gap: 30px;
+        gap: 20px;
     }
     .listInput{
         width: 100%;
@@ -231,6 +243,7 @@ import { computed, ref } from 'vue';
     }
     .custom-checkbox:checked + .taskInput{
         text-decoration: line-through;
+        color: red;
     }
     .completed-task :not(.custom-checkbox){
         opacity: 0.4;
