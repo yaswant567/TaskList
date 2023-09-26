@@ -17,7 +17,6 @@
 <style >
   #app{
      display: flex;
-     text-align: center;
      align-items: center;
      justify-content: center;
      color: rgb(54, 54, 164);
