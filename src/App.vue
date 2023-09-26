@@ -19,9 +19,9 @@
      display: flex;
      align-items: center;
      justify-content: center;
-     color: rgb(54, 54, 164);
+     color: rgb(4, 4, 87);
      font-size: large;
-     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
      margin: 0p;
   }
   .App{

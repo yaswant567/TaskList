@@ -220,14 +220,27 @@ import { computed, ref } from 'vue';
         width: 95%;
         height: 12%;
         overflow: hidden;
+        border: 0.1px solid rgb(0, 128, 255);
     }
     .task:hover .taskSelect {
        display: flex;
     }
     .custom-checkbox{
         position: relative;
-        padding-left: 30px;
         cursor: pointer;
+
+        /* Remove default styles on some browsers */
+        -webkit-appearance: none; 
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border: 2px solid #000; 
+        border-radius: 50%;
+        outline: none; 
+        cursor: pointer;
+    }
+    .custom-checkbox:checked{
+        background-image: linear-gradient(-225deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%);  
     }
 
     .taskInput{
