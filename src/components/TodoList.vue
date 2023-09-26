@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 
     const inputData = ref("");
-    const todoList = ref([{text:'Item 1', completed: false}, {text:'Item 2', completed: true}, {text:'Item 3', completed: false}]);
+    const todoList = ref([{text:'My First Vue Project', completed: false}, {text:'To Do List', completed: true}, {text:'Vue.js', completed: false}]);
     const editingTask = ref(-1);
     const filterTask = ref('All');
 
@@ -288,4 +288,16 @@ import { computed, ref } from 'vue';
         width: 95%;
         border-radius: 7px;
     }
+
+    @media (max-width: 700px) {
+  .list {
+    width: 90%;
+  }
+}
+
+@media (max-height: 380px) {
+  .list {
+    width: 90%;
+  }
+}
 </style>
