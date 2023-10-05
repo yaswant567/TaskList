@@ -1,10 +1,16 @@
 <script setup>
+
 import { computed, ref } from 'vue';
 
     const inputData = ref("");
-    const todoList = ref([{text:'My First Vue Project', completed: false}, {text:'To Do List', completed: true}, {text:'Vue.js', completed: false}]);
+    const todoList = ref([{text:'My First Vue Project', completed: false, status: 'in-progress'}, {text:'To Do List', completed: true, status: 'in-progress'}, {text:'Vue.js', completed: false, status: 'in-progress'}]);
     const editingTask = ref(-1);
     const filterTask = ref('All');
+
+    const statusList = ref(['in-progress', '!progress']);
+    const statusInput = ref("");
+    const statusFilter = ref('in-progress');
+    
 
     const handleClick = () =>{
         if(inputData.value != "")
@@ -34,7 +40,7 @@ import { computed, ref } from 'vue';
     }
 
     const filteredTasks = computed(() => {
-    if (filterTask.value === 'completed') {
+    if (filterTask.value === 'completed' ) {
       return todoList.value.filter((task) => task.completed);
     } 
     else if (filterTask.value === 'active') {
@@ -44,13 +50,28 @@ import { computed, ref } from 'vue';
       return todoList.value;
     }
   });
-</script>
 
+
+  const handleStatus = (event) =>{
+    statusFilter.value = event.target.value;
+  }
+  const handleStatusSubmit = () =>{
+    if(statusInput !== "")
+      statusList.value = [...statusList.value, statusInput];
+    statusInput.value = '';
+    
+  }
+  const handleFilterStatus = computed(() => {
+      return todoList.value.filter((task) => (task.status === statusFilter.value));
+    })
+
+</script>
 
 
 <template>
     <div class="list" > 
-        <h3>2023 Task List</h3>
+        <newTodo/>
+        <h3>2023 Task List </h3>
         <div class="listInput">
             <div class="inputInput"><input class="input" type="text" placeholder="Add your Task here....." v-model="inputData" @keydown.enter="handleClick"/></div>
             <div class="inputButton"><input class="button" type="button" value="Add Task"  @click="handleClick"/></div>
@@ -65,11 +86,28 @@ import { computed, ref } from 'vue';
                       <option value="completed">Completed</option>
                     </select>
                 </span>
+                <span class="filterSelect">
+                    <select name="Filter" @change="handleFilterStatus">
+                      <option v-for="(item, index) in statusList" :key="index" value="all">{{ item }}</option>
+                    </select>
+                </span>
             </div>
             <div class="task" v-for="(item, index) in filteredTasks" :key="index" :class="{ 'completed-task': item.completed }" >
                 <input type="checkbox" class="custom-checkbox" v-model="item.completed">
                 <span v-if="index !== editingTask" class="taskInput">{{ item.text }}</span>
                 <input v-else  v-model="todoList[index].text" class="taskInput" @blur="saveEditedTask" @keyup.enter="saveEditedTask">
+                
+                
+                <span class="filterSubmit">
+                    <input type="text" v-model="statusInput">
+                    <input type="submit" @click ="handleStatusSubmit"/>
+                </span>
+                <span class="filterSelect">
+                    <select name="Filter" @change="handleStatus">
+                      <option v-for="(item, index) in statusList" :key="index" value="item.status">{{ item }}</option>
+                    </select>
+                </span>
+
                 <span class="taskSelect">
                     <span class="delete" @click="deleteTask(index)">Delete</span>
                     <span class="edit" @click="editTask(index)">Edit</span>
@@ -102,7 +140,7 @@ import { computed, ref } from 'vue';
         align-items: center;
         background-color: #ffff;
         border-radius: 17px;
-        width: 37%;
+        width: 70%;
         height: 90%;
         padding: 20px 10px;
         gap: 20px;
