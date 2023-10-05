@@ -41,7 +41,7 @@ import { computed, ref } from 'vue';
 
     const filteredTasks = computed(() => {
     if(statusFilter.value)
-      return todoList.value.filter((task) => (task.status === statusFilter.value));
+      todoList.value.filter((task) => (task.status === statusFilter.value));
     if(filterTask.value === 'completed' ) {
       return todoList.value.filter((task) => task.completed);
     } 
