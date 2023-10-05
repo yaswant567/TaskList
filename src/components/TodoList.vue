@@ -57,12 +57,13 @@ import { computed, ref } from 'vue';
   }
   const handleStatusSubmit = () =>{
     if(statusInput !== "")
-      statusList.value = [...statusList.value, statusInput];
-    statusInput.value = '';
+      statusList.value = [...statusList.value, statusInput.value];
+    statusInput.value = "";
     
   }
+
   const handleFilterStatus = computed(() => {
-      return todoList.value.filter((task) => (task.status === statusFilter.value));
+      return todoList.value.filter((task) => (task.status == statusFilter.value));
     })
 
 </script>
@@ -87,7 +88,7 @@ import { computed, ref } from 'vue';
                     </select>
                 </span>
                 <span class="filterSelect">
-                    <select name="Filter" @change="handleFilterStatus">
+                    <select name="Filter" @change="handleStatus">
                       <option v-for="(item, index) in statusList" :key="index" value="all">{{ item }}</option>
                     </select>
                 </span>
