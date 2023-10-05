@@ -40,21 +40,24 @@ import { computed, ref } from 'vue';
     }
 
     const filteredTasks = computed(() => {
-    if(statusFilter.value)
-      todoList.value.filter((task) => (task.status === statusFilter.value));
+    const statusFiltered =computed(() => {
+      return todoList.value.filter((task) => (task.status === statusFilter.value));}
+      )
+
     if(filterTask.value === 'completed' ) {
-      return todoList.value.filter((task) => task.completed);
+      return statusFiltered.value.filter((task) => task.completed);
     } 
     else if (filterTask.value === 'active') {
-      return todoList.value.filter((task) => !task.completed);
+      return statusFiltered.value.filter((task) => !task.completed);
     } 
     else {
-      return todoList.value;
+      return statusFiltered.value;
     }
   });
 
 
   const handleStatus = (event) =>{
+    console.log(todoList)
     statusFilter.value = event.target.value;
   }
   const handleStatusSubmit = () =>{
@@ -63,10 +66,6 @@ import { computed, ref } from 'vue';
     statusInput.value = "";
     
   }
-
-  const handleFilterStatus = computed(() => {
-      return todoList.value.filter((task) => (task.status == statusFilter.value));
-    })
 
 </script>
 
@@ -106,8 +105,8 @@ import { computed, ref } from 'vue';
                     <input type="submit" @click ="handleStatusSubmit"/>
                 </span>
                 <span class="filterSelect">
-                    <select name="Filter" @change="handleStatus">
-                      <option v-for="(item, index) in statusList" :key="index" value="item.status">{{ item }}</option>
+                    <select name="Filter" v-model="item.status">
+                      <option v-for="(item, index) in statusList" :key="index">{{ item }}</option>
                     </select>
                 </span>
 
