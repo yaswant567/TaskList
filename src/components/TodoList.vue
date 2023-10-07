@@ -2,8 +2,10 @@
 
 import { computed, ref } from 'vue';
 
-    const inputData = ref("");
+    const inputData = ref('');
     const todoList = ref([{text:'My First Vue Project', completed: false, status: 'in-progress'}, {text:'To Do List', completed: true, status: 'in-progress'}, {text:'Vue.js', completed: false, status: 'in-progress'}]);
+    const dummyTodoList = ref([{text:'My First Vue Project', completed: false, status: 'in-progress'}, {text:'To Do List', completed: true, status: 'in-progress'}, {text:'Vue.js', completed: false, status: 'in-progress'}]);
+
     const editingTask = ref(-1);
     const filterTask = ref('All');
 
@@ -40,19 +42,16 @@ import { computed, ref } from 'vue';
     }
 
     const filteredTasks = computed(() => {
-    const statusFiltered =computed(() => {
-      return todoList.value.filter((task) => (task.status === statusFilter.value));}
-      )
+      dummyTodoList.value = todoList.value;
 
     if(filterTask.value === 'completed' ) {
-      return statusFiltered.value.filter((task) => task.completed);
+      return dummyTodoList.value.filter((task) => ((task.completed) && (statusFilter.value === task.status)));
     } 
     else if (filterTask.value === 'active') {
-      return statusFiltered.value.filter((task) => !task.completed);
+      return dummyTodoList.value.filter((task) => ((!task.completed) && (statusFilter.value === task.status)));
     } 
     else {
-      return statusFiltered.value;
-    }
+      return dummyTodoList.value.filter((task) => statusFilter.value === task.status);}
   });
 
 
@@ -90,7 +89,7 @@ import { computed, ref } from 'vue';
                 </span>
                 <span class="filterSelect">
                     <select name="Filter" @change="handleStatus">
-                      <option v-for="(item, index) in statusList" :key="index" value="all">{{ item }}</option>
+                      <option v-for="(item, index) in statusList" :key="index" :value="item">{{ item }}</option>
                     </select>
                 </span>
             </div>
