@@ -65,13 +65,18 @@ import { computed, ref } from 'vue';
     statusInput.value = "";
     
   }
+  const handleInput = (event) =>{
+    
+    statusInput.value = event.target.value;
+    event.target.value = "";
+
+  }
 
 </script>
 
 
 <template>
     <div class="list" > 
-        <newTodo/>
         <h3>2023 Task List </h3>
         <div class="listInput">
             <div class="inputInput"><input class="input" type="text" placeholder="Add your Task here....." v-model="inputData" @keydown.enter="handleClick"/></div>
@@ -100,7 +105,7 @@ import { computed, ref } from 'vue';
                 
                 
                 <span class="filterSubmit">
-                    <input type="text" v-model="statusInput">
+                    <input type="text" @change="handleInput">
                     <input type="submit" @click ="handleStatusSubmit"/>
                 </span>
                 <span class="filterSelect">
